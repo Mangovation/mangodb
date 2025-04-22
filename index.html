@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MangoDB – Peel the Fun, Byte the Flavor!</title>
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      background: #fff8e1;
+      color: #3e2723;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      text-align: center;
+    }
+
+    header {
+      background: #ffeb3b;
+      text-align: center;
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header img.logo {
+      max-width: 150px;
+      border-radius: 0%;
+    }
+
+    header h1 {
+      margin: .5rem 0;
+      font-size: 3rem;
+    }
+
+    .tagline {
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+      color: #d84315;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    .cta {
+      background: #ff5722;
+      color: #fff;
+      padding: .75rem 1.5rem;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    section {
+      padding: 2rem 1rem;
+    }
+
+    #catalog h2::before {
+      content: '📒 ';
+    }
+
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    .input-group input {
+      padding: .5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .mango-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      justify-items: center;
+    }
+
+    .mango-card {
+      background: #fff3e0;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .mango-card img {
+      max-width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .mango-card input[type=number] {
+      width: 60px;
+      margin-top: .5rem;
+    }
+
+    .cart-action {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .cart-action button {
+      background: #ff9800;
+      color: #fff;
+      padding: .75rem 1.5rem;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .order-dashboard {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .order-item {
+      background: #fff9c4;
+      padding: 1rem;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .order-item .status {
+      font-style: italic;
+    }
+
+    .order-item button {
+      display: none;
+    }
+
+    .seller-mode .order-item button {
+      display: block;
+      background: #8e24aa;
+      border: none;
+      color: #fff;
+      padding: .5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .seller-toggle {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      background: #4a148c;
+      color: #fff;
+      border: none;
+      padding: .5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: .9rem;
+      background: #fff3e0;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.9);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+        color: #e65100;
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .buy-section,
+    .order-section {
+      background: #ffe082;
+      padding: 2rem 1rem;
+      border-top: 4px dashed #ffb300;
+    }
+
+    @media(max-width:800px) {
+      .mango-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width:500px) {
+      .mango-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .tagline {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <img src="images/logo.png" alt="MangoDB Logo" class="logo" />
+      <h1>MangoDB</h1>
+      <div class="tagline">The only database that grows on trees.</div>
+      <button class="cta" onclick="document.getElementById('catalog').scrollIntoView()">Explore Catalog</button>
+    </header>
+
+    <section id="catalog">
+      <h2>🍋 Mango Catalog</h2>
+      <div class="input-group">
+        <input type="text" id="buyerName" placeholder="Your Name" />
+        <input type="tel" id="buyerPhone" placeholder="Your Phone Number" />
+      </div>
+      <div class="mango-grid" id="mangoGrid"></div>
+      <div class="cart-action"><button onclick="placeAllOrders()">Place Order</button></div>
+    </section>
+
+    <section class="buy-section">
+      <h2>How to Buy</h2>
+      <p>Scan. Pay. Chill. 🍹</p>
+      <img src="images/qr-code.png" alt="QR Code" style="width:250px;" />
+      <p>We accept: UPI, GPay, PhonePe, Paytm</p>
+    </section>
+
+    <section class="order-section">
+      <h2>Order & Delivery Tracking – Mango Madness Live!</h2>
+      <div class="order-dashboard" id="orderDashboard"></div>
+    </section>
+
+    <footer>
+      <p>Contact: <a href="mailto:hello@mangodb.fun">hello@mangodb.fun</a> | Phone: <a href="tel:+919876543210">
+        212-970-4133</a></p>
+      <p>Follow us:
+        <a href="https://instagram.com/mangodb.fun" target="_blank">Instagram</a> |
+        <a href="https://facebook.com/mangodb.fun" target="_blank">Facebook</a> |
+        <a href="https://twitter.com/mangodb_fun" target="_blank">Twitter</a>
+      </p>
+      <p>© 2025 MangoDB. All rights reserved, fresh from Shanmukha’s farm!</p>
+    </footer>
+
+    <button class="seller-toggle" onclick="activateSellerMode()">🔑</button>
+  </div>
+
+  <script>
+    const sellerCode = '123456';
+    function activateSellerMode() {
+      const entered = prompt('Enter 6-digit seller code:');
+      if (entered === sellerCode) document.body.classList.toggle('seller-mode');
+      else alert('Invalid code');
+    }
+
+    function placeAllOrders() {
+      const name = document.getElementById('buyerName').value.trim();
+      const phone = document.getElementById('buyerPhone').value.trim();
+      if (!name || !phone) return alert('Please enter your name and phone number.');
+
+      const orders = Array.from(document.querySelectorAll('.mango-card'))
+        .map(card => {
+          const qty = parseInt(card.querySelector('input').value);
+          if (!qty) return null;
+          return {
+            name: card.querySelector('h4').textContent,
+            qty,
+            status: 'Order Placed'
+          };
+        })
+        .filter(Boolean);
+
+      const dashboard = document.getElementById('orderDashboard');
+      dashboard.innerHTML = '';
+      orders.forEach(order => {
+        const div = document.createElement('div');
+        div.className = 'order-item';
+        div.innerHTML = `
+          <span>${order.name} (x${order.qty})</span>
+          <span class="status">${order.status}</span>
+          <button onclick="updateStatus(this)">Next</button>
+        `;
+        dashboard.appendChild(div);
+      });
+    }
+
+    function updateStatus(btn) {
+      const status = btn.previousElementSibling;
+      const current = status.textContent;
+      const next = {
+        'Order Placed': 'Payment Received',
+        'Payment Received': 'At Warehouse',
+        'At Warehouse': 'Delivered',
+        'Delivered': 'Delivered'
+      };
+      status.textContent = next[current] || current;
+    }
+
+    const mangoes = [
+      'Alphonso', 'Dasheri', 'Langra', 'Kesar', 'Totapuri', 'Banganapalli', 'Himsagar', 'Neelam', 'Malda', 'Amrapali'
+    ];
+
+    const funnyTitles = [
+      'The King’s Choice!', 'Sweet as First Love', 'The Lazy Man’s Delight', 'Saffron Surprise', 'Parrot Beak Pick!',
+      'Royal Treat from Andhra', 'Juicy Bengali Binge', 'Late Bloomer’s Gift', 'Smells Like Heaven', 'Hyderabad’s Favorite'
+    ];
+
+    const grid = document.getElementById('mangoGrid');
+    mangoes.forEach((name, i) => {
+      const card = document.createElement('div');
+      card.className = 'mango-card';
+      card.innerHTML = `
+    <img src="images/${name.toLowerCase()}.png" alt="${name}" />
+    <h4>${name}</h4>
+    <p>${funnyTitles[i]}</p>
+    <input type="number" min="0" placeholder="Qty" />
+  `;
+      grid.appendChild(card);
+    });
+
+  </script>
+</body>
+
+</html>
